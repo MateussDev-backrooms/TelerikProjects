@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="database/output.css" rel="stylesheet" />
+    <title>Mateuss dev</title>
+    <script>
+      let canvas;
+      let ctx;
+      let img;
+
+      function bodyLoad() {
+        //setup vars
+        canvas = document.getElementById("cool_canvas");
+        ctx = canvas.getContext("2d");
+
+        //generate image
+        img = new Image();
+        img.src = "database/img1.jpg";
+
+        //when image loads to stuff with its pixels
+        img.onload = function () {
+          ctx.drawImage(img, 0, 0, 512, 512);
+          let _data_old = ctx.getImageData(0, 0, 512, 512).data;
+
+          let _data_new = [];
+
+          for (let i = 0; i < 512 * 512 * 4; i += 4) {
+            _data_new[i] = _data_old[i]; //R
+            _data_new[i + 1] = _data_old[i + 1]; //G
+            _data_new[i + 2] = _data_old[i + 2]; //B
+            _data_new[i + 3] = _data_old[i + 3]; //A
+          }
+
+          _data_new = filter_blur(_data_new, 2);
+
+          let _img_data = new ImageData(
+            new Uint8ClampedArray(_data_new),
+            512,
+            512
+          );
+
+          ctx.putImageData(_img_data, 0, 0);
+        };
+
+        function filter_isolateColor(inputArr, col) {
+          let output = [];
+          let _offset = 0;
+          switch (col) {
+            case "R":
+              _offset = 0;
+              break;
+            case "G":
+              _offset = 1;
+              break;
+            case "B":
+              _offset = 2;
+              break;
+          }
+          for (let i = 0; i < inputArr.length; i += 4) {
+            output[i + _offset] = inputArr[i + _offset];
+            output[i + 3] = 255;
+          }
+          return output;
+        }
+        function filter_deepfry(inputArr) {
+          let output = [];
+          for (let i = 0; i < inputArr.length; i += 4) {
+            output[i] = Math.round(inputArr[i] / 255) * 255; //R
+            output[i + 1] = Math.round(inputArr[i + 1] / 255) * 255; //G
+            output[i + 2] = Math.round(inputArr[i + 2] / 255) * 255; //B
+            output[i + 3] = 255;
+          }
+          return output;
+        }
+
+        function filter_negative(inputArr) {
+          let output = [];
+          for (let i = 0; i < inputArr.length; i += 4) {
+            output[i] = 255 - inputArr[i]; //R
+            output[i + 1] = 255 - inputArr[i + 1]; //G
+            output[i + 2] = 255 - inputArr[i + 2]; //B
+            output[i + 3] = 255;
+          }
+          return output;
+        }
+
+        function filter_blur(inputArr, radius) {
+          let output = [];
+          let initial = inputArr;
+          for (let i = 0; i < inputArr.length; i += 4) {
+            let _storage = [];
+            let _avgR = 0;
+            let _avgG = 0;
+            let _avgB = 0;
+
+            //grab stage
+            for (let x = -radius; x <= radius; x++) {
+                if(i+radius >= 0 && i+radius < inputArr.length) {
+                    _avgR += initial[(i+0) + radius]; //R
+                    _avgG += initial[(i+1) + radius]; //G
+                    _avgB += initial[(i+2) + radius]; //B
+
+                }
+            }
+
+            
+            // console.log(_avgR, _avgG, _avgB);
+
+            _avgR = _avgR / _storage.length / 3;
+            _avgG = _avgG / _storage.length / 3;
+            _avgB = _avgB / _storage.length / 3;
+
+            //apply
+            output[i + 0] = _avgR;
+            output[i + 1] = _avgG;
+            output[i + 2] = _avgB;
+            output[i + 3] = 255;
+          }
+          return output;
+        }
+      }
+    </script>
+  </head>
+  <body onload="bodyLoad()">
+    <div
+      class="flex flex-row fixed top-0 left-0 w-screen bg-slate-800 items-center justify-center text-white"
+    >
+      <button class="m-5 bg-slate-400 rounded-xl shadow-xl w-12 h-12">1</button>
+      <button class="m-5 bg-slate-400 rounded-xl shadow-xl w-12 h-12">2</button>
+      <button class="m-5 bg-slate-400 rounded-xl shadow-xl w-12 h-12">3</button>
+      <button class="m-5 bg-slate-400 rounded-xl shadow-xl w-12 h-12">4</button>
+      <button class="m-5 bg-slate-400 rounded-xl shadow-xl w-12 h-12">5</button>
+      <button class="m-5 bg-slate-400 rounded-xl shadow-xl w-12 h-12">6</button>
+    </div>
+
+    <h1 class="w-fit text-xl font-bold shadow-2xl">Welcome to MateussDev!</h1>
+
+    <canvas id="cool_canvas" width="600" height="600"></canvas>
+  </body>
+</html>

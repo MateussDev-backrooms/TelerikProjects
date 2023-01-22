@@ -1,0 +1,93 @@
+Tutorial.txt
+===================================================
+If you are here, that means you don't understand something in the engone
+Welp, you've came to the right place, dear friend!
+
+Basic Features:
+
+game.js functions:
+
+start(): In game.js there is a function, called start(). Basically whatever code you put in there it will be executed once at the start of the program
+update(): Everything you code inside this function will be executed each millisecond (100 times a second). Useful for movement
+render(): In here you place all the drawImage() and similar things (a bit below). It executes every screen frame of your device. Or, each frame update. Here matters youe FPS. Can't be used for movement
+draw(): The same as render(), but the parent/superior function
+input_down(key): Everything that you wrote here will be executed every time the player/user holds down any keyboard button. Can be configured to a specific key using if statements, so your code happens when the player/user holds down a specific key
+input_up(key): The same as input_down, but the code happens once when the player/user releases any/specific key on the keyboard
+mouse_down(): Everything that you place here will be executed when the player/user holds down their mouse. Unfortunately can't be configured to a specific mouse key
+mouse_up(): The same as mouse_down(), but happens when the player/user releases their mouse
+keyup(key) and keydown(key): The same as input_up(key) and input_down(key), but clearer from code
+mousedown() and mouseup(): The same as mouse_down() and mouse_up()
+
+game.js variables:
+
+deltaTime: Increases each update tick/millisecond. Also is the time of the user/player using your app/game in milliseconds, if you didn't assign it to reset. Useful for non async timed functions
+
+Everything below //Input system: keys on the keyboard and mouse, that are ready to be assigned either in input_down()/input_up()/ect or update()
+
+start.html/hidden functions
+
+areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight): Checks if a box A (coordinates: Ax, Ay; size: Awidth, Aheight) is overlapping/colliding with box B (coordinates: Bx, By; size: Bwidth, Bheight)
+randomInteger(upTo): Generates a random number, that is bigger or equal to 0, but smaller than upTo. So if upTo was 3, that all the possible outputs would be 0, 1 and 2
+drawLine(startX, startY, endX, endY): draws a straingt line from the two positions with a small (around 5 px) thickness. The thickness is unconfigurable
+tryLoad(path, backupColor): tries to load an image from the images folder. Must be put inside drawImage(). path must be without the .png and without the images/. backupColor is the primary color (not really sure why this exists :P)
+tryLoadWithFullPath(path, backupColor): The same as tryLoad(), but includes the function to use a full path (if you put "logo.png" in this function you'll get the Mateuss engine logo as a sprite for drawImage())
+drawImage(image, x, y, width, height, rotation): image is either an existing image from images folder, or an tryLoad() function. The images with [num] at the end are frames of an object, and the number in [] can be replaced with a variable
+                                                 x and y are the coordinates of the image you are trying to render (The coordinate pivot is at the top-right corner of the image)
+                                                 width and height are how wide and tall the image is in pixels (width goes right from the pivot, and height goes down from the pivot)
+                                                 angle is how rotated the image is in angles
+
+start.html/hidden variables
+updateTime: deafult: 10. Configures how fast the app/game updates in the update()
+
+Builders:
+
+FuncIo:
+
+This builder adds several useful features
+
+GetOneRelativePos(x, rel_x): finds a position (x), relative to another (rel_x). Useful for slingshot games
+SmoothFloatVar(needed_value, smooth_factor): kind-off broken function, that smoothens a value from 0 to needed_value. The bigger the smooth_factor, the more time it will me smoothend
+IsHittingLeftWall(myX, myY, width, height): Returns to the code true, when an object is hitting the Left playground border or, as I call it: wall
+IsHittingRightWall(myX, myY, width, height): The same as IsHittingLeftWall, but for the Right playground border
+IsHittingUpperWall(myX, myY, width, height): The same as IsHittingLeftWall, but for the Top playground border
+IsHittingLowerWall(myX, myY, width, height): The same as IsHittingLeftWall, but for the Bottom playground border
+IsHittingRightWall(myX, myY, width, height): The same as IsHittingLeftWall, but for any playground border
+IsClicked(buttonx, buttony, width, height): checks if the box (coords: buttonx, buttony; size: width height) is clicked
+IsHoveringAbove(buttonx, buttony, width, height): checks if the box (coords: buttonx, buttony; size: width height) has the mouse above it
+IsHeld(buttonx, buttony, width, height, time): checks if the box (coords: buttonx, buttony; size: width height) is held for time milliseconds
+TimeDelay(ms): another way to delay the next lines of code, but you'll have to place await before the function call and async before the function, where you place it
+DrawRectangle(rgb, transparency, x, y, width, height, angle): Very similar to drawImage, but instead of drawing an existing image it traws a solid color (specified in rgb with hex code, rgb code or html deafult colors). Also has transparency
+                                                              A useful resource: https://htmlcolorcodes.com/color-picker/ to pick colors online and get their hex code or rgb code
+
+Newtonus:
+
+A very simple AABB physics engine. Uses massives to work, and it's pretty fast
+
+Newtonus_PhysicsTick(): Function, that calculates some physics and updates the massives of objects. You can configure some physics functions using if(bodyName[bodyID]=="name_of_edited_object")
+Newtonus_Render_Bodies(): Renders the objects using info from the newtonus massives
+Newtonus_Collision(): A function, that calculates some collision math. Currently the physics engine is AABB (Axis Aligned Bounding Box), which means you can't rotate any object via physics, but I want to change that soonish
+Newtonus_AddBody(name, type, x, y, width, height, mass, friction, velX, velY, bounciness, impact_resistance, border_collision): Creates a new Newtonus object
+                                                                                                                                name is the name of your object
+                                                                                                                                type is what type of physical body your object is (0 is rigidbody, 1 is unmovable solid)
+                                                                                                                                x and y are starting coordinates
+                                                                                                                                width and height are the size of your object
+                                                                                                                                mass is how heavy your object is
+                                                                                                                                friction is how much the velocity of your object is remuved, when colliding with something (0 - will stop right away, 1 - will not slow down)
+                                                                                                                                velX and velY are the starting speed
+                                                                                                                                bounciness is how much much the object should bounce (0 - will not bounce at all, 1 - will bounce away with the same force or bounce forever)
+                                                                                                                                impact_resistance is how much your object will absorb the force from impacting with another object (0 - will absorb any force put on it, 1 - will not absorb any force)
+                                                                                                                                border_collision is a bool, that will determine will the object bounce off the screen
+
+FX Maestro:
+
+Adds effects, that add feel to your game (to use the ScreenShake add CamX and CamY to all the functions in render, so you see the shake)
+
+ScreenShake(power, duration): A function that offsets the camera by power pixels in a random direction for duration milliseconds
+ScreenFlare(duration, color): A function that creates a rectangle with the color: color for the whole screen and fades is away for duration milliseconds
+
+Auditor:
+
+Simple yet powerful audio system. Again, uses massives to work
+
+RegisterSound(name, path): Adds a sound with name: name and path: path. Name is the access string, so try to keep it unique from any other name in the massive
+PlaySound(name): Checks throu the massive of names and if the name of the sound is name, then it plays the audio with the same ID

@@ -1,0 +1,29 @@
+=========Mateuss Engine v1.8========
+Welcome to Mateuss Engine.
+This engine is a HTML/JavaScript engine, that is created from Telerik Engine 2020,
+but adds much more features
+
+This file is not necesarry to the Engine, so you can delete it if you want
+
+============================================What Changed:==============================================
+
+This update is just like the others: Medium addition count
+But these additions were very useful
+
+Additions:
+1. Added Auditor: a simple, yet powerful system of 2 arrays, that allows infinete sounds for your game
+2. A bit of dope 8-bit sound effects
+3. Friction and Impact resistance to Newtonus Objects
+4. Tutorial.txt, that has the explanation of each integrated feature of Mateuss Engine
+
+Changes:
+1. Seperated the builders from game.js to features.js, so your code is a bit less long
+2. Rewrote Newtonus, so it is much easier to understand and less glitched, but it still has some problems :P
+
+Bug Fixes:
+1. Fixed the jittering of a Newtonus object, when it stands on anything (Other body or Floor)
+2. Kinda fixed the bug when a Newtonus object is inside another and they start going upwards
+3. Fixed bug when an extra heavy object falls on another object it clips through the floor into the backrooms
+4. Fixed bug when an object spawns colliding with the celing and instead of falling down it goes up
+5. Fixed most other problems, that were in the Mateuss Engine Feature Showcase
+6. Fixed rotation being broken
