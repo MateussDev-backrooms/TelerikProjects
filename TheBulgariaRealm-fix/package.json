@@ -1,0 +1,18 @@
+{
+  "name": "thebulgariarealm",
+  "version": "0.6.9",
+  "description": "The most realistic bulgaria simulator. Only sofia available for now",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "n"
+  },
+  "author": "MateussDev",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bulgaria simulator</title>
+    <link rel="stylesheet" href="output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">  
+  </head>
+  <body onload="e_init()">
+    <!-- Top bar -->
+    <div class="flex flex-row bg-stone-400 select-none w-screen text-2xl p-2">
+      <b class="m-2 p-2 text-3xl">Welcome to Sofia!</b>
+      <b class="m-2 p-2" id="ui_area">Current area: Lulin</b>
+      <b class="m-2 p-2" id="ui_health">HP: idk</b>
+      <b class="m-2 p-2" id="ui_balance">Balance: idk</b>
+    </div>
+    <!-- html body-->
+    <canvas class="m-2" id="i_main_canvas"></canvas>
+
+    <!-- load dependencies and preload game -->
+    <script src="Engine/audio.js"></script>
+    <script src="Engine/math.js"></script>
+    <script src="Engine/render.js"></script>
+
+    <!-- load game-->
+    <script src="Script/itemCollection.js"></script>
+    <script src="Script/main.js"></script>
+
+    <!-- load engine -->
+    <script src="Engine/engine.js"></script>
+    <script src="Engine/input.js"></script>
+  </body>
+</html>
